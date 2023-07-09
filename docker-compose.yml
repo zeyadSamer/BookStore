@@ -1,0 +1,20 @@
+version: '8.0'
+services:
+  mysql:
+    image: mysql
+    cap_add:
+      - SYS_NICE
+    restart: always
+    # command: --default-authentication-plugin=mysql_native_password
+    environment:
+      - MYSQL_ROOT_HOST=127.0.0.1
+      - MYSQL_DATABASE=books
+      - MYSQL_ROOT_PASSWORD=root
+    ports:
+      - '3306:3306'
+    volumes:
+      - mysql:/var/lib/mysql
+      - ./mysql/init.sql:/docker-entrypoint-initmysql.d/init.sql
+volumes:
+  mysql:
+    driver: local
